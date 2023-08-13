@@ -59,12 +59,4 @@ class InstallCommand extends Command
 
         return Command::SUCCESS;
     }
-
-    /**
-     * Define the command's schedule.
-     */
-    public function schedule(Schedule $schedule): void
-    {
-        // $schedule->command(static::class)->everyMinute();
-    }
 }
