@@ -55,6 +55,9 @@ jobs:
             -   name: Build Bundle
                 run: php perscom app:build perscom --build-version=${{ steps.tag_version.outputs.new_tag }} -vvv
 
+            -   name: Update Permissions
+                run: chmod +x builds/perscom
+
             -   name: Create Github Release
                 uses: ncipollo/release-action@v1
                 if: github.ref == 'refs/heads/master'

@@ -45,7 +45,7 @@ class InstallCommand extends Command
             });
         }
 
-        $found = Setting::query()->whereIn('key', ['perscom_id', 'api_key'])->exists();
+        $found = Setting::query()->whereIn('key', ['perscom_id', 'api_key'])->whereNotNull('value')->exists();
 
         $continue = true;
         if ($found) {
