@@ -18,7 +18,7 @@ abstract class ResourceCommand extends Command implements ResourceCommandContrac
     {
         $apiService = app()->make(PerscomApiServiceContract::class);
 
-        $response =  $apiService->api(optional($this->option('id'), function ($id) {
+        $response = $apiService->api(optional($this->option('id'), function ($id) {
             return "$this->endpoint/$id";
         }) ?: $this->endpoint);
 

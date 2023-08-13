@@ -3,7 +3,6 @@
 namespace App\Transformers;
 
 use App\Contracts\ResourceTransformerContract;
-use Illuminate\Support\Arr;
 
 class ResourceTransformer implements ResourceTransformerContract
 {

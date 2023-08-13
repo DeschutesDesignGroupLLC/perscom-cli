@@ -1,0 +1,67 @@
+name: Deploy Widget
+
+on:
+    push:
+        branches:
+            - master
+            - staging
+
+jobs:
+    build:
+        name: Build CLI
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        steps:
+            -   name: Checkout Source Code
+                uses: actions/checkout@v3
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
+                    extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite
+                    ini-values: error_reporting=E_ALL
+                    tools: composer
+                    coverage: xdebug
+                env:
+                    COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            -   name: Get Composer Cache Directory
+                id: composer-cache
+                run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+            -   name: Cache Composer Dependencies
+                uses: actions/cache@v3
+                with:
+                    path: ${{ steps.composer-cache.outputs.dir }}
+                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+                    restore-keys: |
+                        ${{ runner.os }}-composer-
+
+            -   name: Install Dependencies
+                run: composer install --prefer-dist --no-interaction --no-progress
+
+            -   name: Bump Application Version and Tag
+                id: tag_version
+                uses: mathieudutour/github-tag-action@v6.0
+                with:
+                    github_token: ${{ secrets.GITHUB_TOKEN }}
+                    default_bump: patch
+                    default_prerelease_bump: prerelease
+                    release_branches: master
+                    pre_release_branches: staging
+                    append_to_pre_release_tag: prerelease
+
+            -   name: Build Bundle
+                run: php perscom app:build perscom --build-version=${{ steps.tag_version.outputs.new_tag }}
+
+            -   name: Create Github Release
+                uses: ncipollo/release-action@v1
+                if: github.ref == 'refs/heads/master'
+                with:
+                    tag: ${{ steps.tag_version.outputs.new_tag }}
+                    name: ${{ steps.tag_version.outputs.new_tag }}
+                    generateReleaseNotes: true
+                    makeLatest: true
+                    token: ${{ secrets.RELEASE_TOKEN }}
+                    artifacts: builds/perscom
