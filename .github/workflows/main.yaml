@@ -63,5 +63,4 @@ jobs:
                     name: ${{ steps.tag_version.outputs.new_tag }}
                     generateReleaseNotes: true
                     makeLatest: true
-                    token: ${{ secrets.RELEASE_TOKEN }}
                     artifacts: builds/perscom
