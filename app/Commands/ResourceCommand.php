@@ -48,12 +48,22 @@ abstract class ResourceCommand extends Command implements ResourceCommandContrac
             $keys = explode(',', $this->option('keys'));
         }
 
-        if ($this->option('output') === 'table') {
-            render(view('api.view', [
-                'transformer' => $transformer->transform($response->json('data'), $keys),
-            ]));
-        } else {
-            $this->line($response);
+        switch ($this->option('output')) {
+            case 'json':
+                $this->line($response);
+                break;
+
+            case 'html':
+                $this->line(view('api.view', [
+                    'transformer' => $transformer->transform($response->json('data'), $keys),
+                ])->render());
+                break;
+
+            default:
+                render(view('api.view', [
+                    'transformer' => $transformer->transform($response->json('data'), $keys),
+                ]));
+                break;
         }
 
         return Command::SUCCESS;
