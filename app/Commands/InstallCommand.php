@@ -3,6 +3,8 @@
 namespace App\Commands;
 
 use App\Models\Setting;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\File;
 use LaravelZero\Framework\Commands\Command;
 
 class InstallCommand extends Command
@@ -28,6 +30,21 @@ class InstallCommand extends Command
      */
     public function handle()
     {
+        if (! File::exists($_SERVER['HOME'].'/.perscom/database.sqlite')) {
+            $this->confirm('The PERSCOM CLI will create a database on your local system to store some settings. Do you wish to continue?', true);
+
+            $this->task('Provisioning database on local system', function () {
+                File::makeDirectory($_SERVER['HOME'].'/.perscom');
+                File::put($_SERVER['HOME'].'/.perscom/database.sqlite', '');
+            });
+
+            $this->task('Setting and migrating the database', function () {
+                Artisan::call('migrate --force');
+
+                return true;
+            });
+        }
+
         $found = Setting::query()->whereIn('key', ['perscom_id', 'api_key'])->exists();
 
         $continue = true;
@@ -42,7 +59,7 @@ class InstallCommand extends Command
         $perscomId = $this->ask('What is your PERSCOM ID');
         $apiKey = $this->ask('What is your PERSCOM API key');
 
-        $this->task('Configuring and setting up the PERSCOM CLI', function () use ($perscomId, $apiKey) {
+        $this->task('Saving settings to the database', function () use ($perscomId, $apiKey) {
             Setting::updateOrCreate([
                 'key' => 'perscom_id',
             ], ['value' => $perscomId]);
