@@ -53,7 +53,7 @@ jobs:
                     append_to_pre_release_tag: prerelease
 
             -   name: Build Bundle
-                run: php perscom app:build perscom --build-version=${{ steps.tag_version.outputs.new_tag }}
+                run: php perscom app:build perscom --build-version=${{ steps.tag_version.outputs.new_tag }} -vvv
 
             -   name: Create Github Release
                 uses: ncipollo/release-action@v1
