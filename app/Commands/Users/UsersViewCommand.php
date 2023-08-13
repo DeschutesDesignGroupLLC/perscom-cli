@@ -15,7 +15,8 @@ class UsersViewCommand extends ResourceCommand
     protected $signature = 'users:view
                            {--id= : The ID of a user (optional)}
                            {--keys= : A comma-delimited list of additional attributes to include (optional)}
-                           {--include= : A comma-delimited list of resource relationships to include (optional)}';
+                           {--include= : A comma-delimited list of resource relationships to include (optional)}
+                           {--output=table : The intended output of the command (options: table, json)}';
 
     /**
      * The description of the command.
