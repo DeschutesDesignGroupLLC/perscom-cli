@@ -1,5 +1,6 @@
 .env
 .editorconfig
+/builds
 /vendor
 /.idea
 /.vscode
