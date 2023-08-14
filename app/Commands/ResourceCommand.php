@@ -84,7 +84,7 @@ abstract class ResourceCommand extends Command implements ResourceCommandContrac
 
         $transformer = app()->make($this->transformer);
 
-        if ($keys = $this->option('keys')) {
+        if ($this->hasOption('keys')) {
             $keys = explode(',', $this->option('keys'));
         }
 
