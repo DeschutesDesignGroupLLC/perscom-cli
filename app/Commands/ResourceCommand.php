@@ -66,21 +66,17 @@ abstract class ResourceCommand extends Command implements ResourceCommandContrac
             return Command::FAILURE;
         }
 
-        if ($this->method === Request::METHOD_POST) {
-            $resource = Str::lower(Str::singular($this->endpoint));
+        $resource = Str::lower(Str::singular($this->endpoint));
 
+        if ($this->method === Request::METHOD_POST) {
             $this->info("The $resource has been successfully created.");
         }
 
         if ($this->method === Request::METHOD_PUT) {
-            $resource = Str::lower(Str::singular($this->endpoint));
-
             $this->info("The $resource has been successfully updated.");
         }
 
         if ($this->method === Request::METHOD_DELETE) {
-            $resource = Str::lower(Str::singular($this->endpoint));
-
             $this->info("The $resource has been successfully deleted.");
 
             return Command::SUCCESS;
