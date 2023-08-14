@@ -50,14 +50,16 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['stderr'],
+            'channels' => ['stderr', 'single'],
             'ignore_exceptions' => false,
         ],
 
         'single' => [
             'driver' => 'single',
-            'path' => storage_path('logs/laravel.log'),
-            'level' => env('LOG_LEVEL', 'debug'),
+            'path' => Phar::running()
+                ? $_SERVER['HOME'].'/.perscom/logs/perscom.log'
+                : storage_path('logs/perscom.log'),
+            'level' => env('LOG_LEVEL', 'error'),
         ],
 
         'daily' => [

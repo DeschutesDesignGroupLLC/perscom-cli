@@ -13,7 +13,7 @@ class UsersViewCommand extends ResourceCommand
      * @var string
      */
     protected $signature = 'users:view
-                           {--id= : The ID of a user (optional)}
+                           {--id= : The ID of a specific user (optional)}
                            {--keys= : A comma-delimited list of additional attributes to include (optional)}
                            {--include= : A comma-delimited list of resource relationships to include (optional)}
                            {--output=table : The intended output of the command (options: table, json, html)}';
@@ -23,7 +23,7 @@ class UsersViewCommand extends ResourceCommand
      *
      * @var string
      */
-    protected $description = 'View a list of users or a specific user';
+    protected $description = 'View a list of users';
 
     /**
      * The API endpoint

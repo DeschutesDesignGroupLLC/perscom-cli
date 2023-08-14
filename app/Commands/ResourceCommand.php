@@ -18,7 +18,7 @@ abstract class ResourceCommand extends Command implements ResourceCommandContrac
      */
     public function handle()
     {
-        if (! File::exists($_SERVER['HOME'].'/.perscom/database.sqlite')) {
+        if (! File::exists($_SERVER['HOME'].'/.perscom/database/database.sqlite')) {
             $this->error('Unable to find the local database. Please run the install command to perform the PERSCOM CLI setup.');
 
             return Command::FAILURE;
