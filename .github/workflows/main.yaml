@@ -58,6 +58,20 @@ jobs:
             -   name: Update Permissions
                 run: chmod +x builds/perscom
 
+            -   name: Authenticate with Container Registry
+                uses: docker/login-action@v2
+                with:
+                    registry: ghcr.io
+                    username: ${{ github.actor }}
+                    password: ${{ secrets.GITHUB_TOKEN }}
+
+            -   name: Build and Push Docker Image
+                uses: docker/build-push-action@v4
+                with:
+                    context: .
+                    push: true
+                    tags: deschutesdesigngroupllc/perscom:${{ steps.tag_version.outputs.new_version }}
+
             -   name: Create Github Release
                 uses: ncipollo/release-action@v1
                 if: github.ref == 'refs/heads/master'
