@@ -1,5 +1,7 @@
 FROM php:8.1-cli
 
+LABEL org.opencontainers.image.source="https://github.com/DeschutesDesignGroupLLC/perscom-cli"
+
 RUN apt-get update \
     && apt-get install -y wget \
     && rm -rf /var/lib/apt/lists/*

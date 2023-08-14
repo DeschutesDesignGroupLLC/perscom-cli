@@ -15,13 +15,13 @@ The PERSCOM CLI can be accessed and executed through various methods, each prese
 Retrieve the Docker image from the registry.
 
 ```bash
-docker pull deschutesdesigngroupllc/perscom-cli
+docker pull ghcr.io/deschutesdesigngroupllc/perscom
 ```
 
 Execute the PERSCOM CLI using this command.
 
 ```bash
-docker run --rm -it deschutesdesigngroupllc/perscom <command> [options] [arguments]
+docker run --rm -it ghcr.io/deschutesdesigngroupllc/perscom <command> [options] [arguments]
 ```
 
 ### PHAR Method
@@ -50,7 +50,7 @@ Discover the list of commands using the `list` command.
 
 **Docker**:
 ```bash
-docker run --rm -it deschutesdesigngroupllc/perscom list
+docker run --rm -it ghcr.io/deschutesdesigngroupllc/perscom list
 ```
 
 **PHAR**:
@@ -64,15 +64,13 @@ For each command, valuable instructions are accessible via the `--help` argument
 
 **Docker**:
 ```bash
-docker run --rm -it deschutesdesigngroupllc/perscom <command> --help
+docker run --rm -it ghcr.io/deschutesdesigngroupllc/perscom <command> --help
 ```
 
 **PHAR**:
 ```bash
 php perscom <command> --help
 ```
-
-Enhance your personnel data management using the PERSCOM CLI's intuitive interface.
 
 ## Documentation
 
