@@ -4,16 +4,18 @@ namespace App\Commands\Users;
 
 use App\Commands\ResourceCommand;
 use App\Transformers\UsersTransformer;
+use Illuminate\Contracts\Console\PromptsForMissingInput;
 
-class UsersViewCommand extends ResourceCommand
+class UsersUpdateCommand extends ResourceCommand implements PromptsForMissingInput
 {
     /**
      * The signature of the command.
      *
      * @var string
      */
-    protected $signature = 'users:view
-                           {id? : The ID of a specific user to view (optional)}
+    protected $signature = 'users:update
+                           {id : The ID of the user being updated}
+                           {--body= : The JSON payload containing the updated user data}
                            {--keys= : A comma-delimited list of additional attributes to include (optional)}
                            {--include= : A comma-delimited list of resource relationships to include (optional)}
                            {--output=table : The intended output of the command (options: table, json, html)}';
@@ -23,7 +25,7 @@ class UsersViewCommand extends ResourceCommand
      *
      * @var string
      */
-    protected $description = 'View a list of users';
+    protected $description = 'Update an existing user';
 
     /**
      * The API endpoint
@@ -42,5 +44,17 @@ class UsersViewCommand extends ResourceCommand
     /**
      * @var string
      */
-    protected $method = 'GET';
+    protected $method = 'PUT';
+
+    /**
+     * Prompt for missing input arguments using the returned questions.
+     *
+     * @return array
+     */
+    protected function promptForMissingArgumentsUsing()
+    {
+        return [
+            'id' => 'Which user ID should be updated?',
+        ];
+    }
 }

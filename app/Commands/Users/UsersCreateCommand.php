@@ -5,15 +5,15 @@ namespace App\Commands\Users;
 use App\Commands\ResourceCommand;
 use App\Transformers\UsersTransformer;
 
-class UsersViewCommand extends ResourceCommand
+class UsersCreateCommand extends ResourceCommand
 {
     /**
      * The signature of the command.
      *
      * @var string
      */
-    protected $signature = 'users:view
-                           {id? : The ID of a specific user to view (optional)}
+    protected $signature = 'users:create
+                           {--body= : The JSON payload containing the new user data}
                            {--keys= : A comma-delimited list of additional attributes to include (optional)}
                            {--include= : A comma-delimited list of resource relationships to include (optional)}
                            {--output=table : The intended output of the command (options: table, json, html)}';
@@ -23,7 +23,7 @@ class UsersViewCommand extends ResourceCommand
      *
      * @var string
      */
-    protected $description = 'View a list of users';
+    protected $description = 'Create a new user';
 
     /**
      * The API endpoint
@@ -42,5 +42,5 @@ class UsersViewCommand extends ResourceCommand
     /**
      * @var string
      */
-    protected $method = 'GET';
+    protected $method = 'POST';
 }

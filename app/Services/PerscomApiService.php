@@ -13,7 +13,7 @@ class PerscomApiService implements PerscomApiServiceContract
     /**
      * @throws \Exception
      */
-    public function api(string $endpoint, string $method = Request::METHOD_GET, array $data = [])
+    public function api(string $endpoint, string $method = Request::METHOD_GET, ?array $data = [])
     {
         $token = Setting::query()->where('key', 'api_key')->pluck('value')->first();
         $id = Setting::query()->where('key', 'perscom_id')->pluck('value')->first();

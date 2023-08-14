@@ -58,9 +58,9 @@ return [
         Illuminate\Console\Scheduling\ScheduleFinishCommand::class,
         Illuminate\Console\Scheduling\ScheduleListCommand::class,
         Illuminate\Console\Scheduling\ScheduleRunCommand::class,
+        Illuminate\Database\Console\WipeCommand::class,
         Illuminate\Database\Console\Migrations\FreshCommand::class,
         Illuminate\Database\Console\Migrations\InstallCommand::class,
-        Illuminate\Database\Console\Migrations\MigrateCommand::class,
         Illuminate\Database\Console\Migrations\MigrateCommand::class,
         Illuminate\Database\Console\Migrations\MigrateMakeCommand::class,
         Illuminate\Database\Console\Migrations\RefreshCommand::class,
@@ -87,13 +87,12 @@ return [
 
     'remove' => Phar::running() ? [
         Illuminate\Database\Console\Seeds\SeedCommand::class,
-        Illuminate\Database\Console\WipeCommand::class,
-        Illuminate\Foundation\Console\ModelMakeCommand::class,
         Illuminate\Database\Console\Seeds\SeederMakeCommand::class,
+        Illuminate\Foundation\Console\ModelMakeCommand::class,
+        LaravelZero\Framework\Commands\BuildCommand::class,
+        LaravelZero\Framework\Commands\InstallCommand::class,
         LaravelZero\Framework\Commands\MakeCommand::class,
         LaravelZero\Framework\Commands\RenameCommand::class,
         LaravelZero\Framework\Commands\StubPublishCommand::class,
-        LaravelZero\Framework\Commands\BuildCommand::class,
-        LaravelZero\Framework\Commands\InstallCommand::class,
     ] : [],
 ];
