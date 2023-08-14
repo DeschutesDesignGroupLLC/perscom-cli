@@ -5,7 +5,9 @@ return [
     'disks' => [
         'local' => [
             'driver' => 'local',
-            'root' => $_SERVER['HOME'].'/.perscom/app',
+            'root' => Phar::running()
+                ? $_SERVER['HOME'].'/.perscom/app'
+                : storage_path('app'),
         ],
     ],
 ];

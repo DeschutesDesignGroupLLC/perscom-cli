@@ -1,18 +1,18 @@
 {
-    "name": "laravel-zero/laravel-zero",
-    "description": "The Laravel Zero Framework.",
-    "keywords": ["framework", "laravel", "laravel zero", "console", "cli"],
-    "homepage": "https://laravel-zero.com",
+    "name": "deschutesdesigngroupllc/perscom-cli",
+    "description": "TA command-line interface tool to interact with your PERSCOM data.",
+    "keywords": ["perscom", "console", "cli"],
+    "homepage": "https://perscom.io",
     "type": "project",
     "license": "MIT",
     "support": {
-        "issues": "https://github.com/laravel-zero/laravel-zero/issues",
-        "source": "https://github.com/laravel-zero/laravel-zero"
+        "issues": "https://github.com/DeschutesDesignGroupLLC/perscom-cli/issues",
+        "source": "https://github.com/DeschutesDesignGroupLLC/perscom-cli"
     },
     "authors": [
         {
-            "name": "Nuno Maduro",
-            "email": "enunomaduro@gmail.com"
+            "name": "Jon Erickson",
+            "email": "jon@deschutesdesigngroup.com"
         }
     ],
     "require": {
