@@ -8,50 +8,27 @@ use Illuminate\Contracts\Console\PromptsForMissingInput;
 
 class UsersUpdateCommand extends ResourceCommand implements PromptsForMissingInput
 {
-    /**
-     * The signature of the command.
-     *
-     * @var string
-     */
     protected $signature = 'users:update
                            {id : The ID of the user being updated}
                            {--body= : The JSON payload containing the updated user data}
                            {--keys= : A comma-delimited list of additional attributes to include (optional)}
-                           {--include= : A comma-delimited list of resource relationships to include (optional)}
-                           {--output=table : The intended output of the command (options: table, json, html)}';
+                           {--include= : A comma-delimited list of resource relationships to include (optional)}';
 
-    /**
-     * The description of the command.
-     *
-     * @var string
-     */
     protected $description = 'Update an existing user';
 
-    /**
-     * The API endpoint
-     *
-     * @var string
-     */
-    protected $endpoint = 'users';
+    protected string $transformer = UsersTransformer::class;
 
-    /**
-     * The transformer to use
-     *
-     * @var string
-     */
-    protected $transformer = UsersTransformer::class;
+    public function performApiCall(): array
+    {
+        $body = json_decode($this->option('body'), true);
+        if ($this->hasOption('body') && is_null($body)) {
+            throw new \Exception('Please make sure the body option is properly formatted JSON.');
+        }
 
-    /**
-     * @var string
-     */
-    protected $method = 'PUT';
+        return $this->perscom->users()->update($this->argument('id'), $body ?? [])->json('data');
+    }
 
-    /**
-     * Prompt for missing input arguments using the returned questions.
-     *
-     * @return array
-     */
-    protected function promptForMissingArgumentsUsing()
+    protected function promptForMissingArgumentsUsing(): array
     {
         return [
             'id' => 'Which user ID should be updated?',

@@ -7,40 +7,21 @@ use App\Transformers\UsersTransformer;
 
 class UsersViewCommand extends ResourceCommand
 {
-    /**
-     * The signature of the command.
-     *
-     * @var string
-     */
     protected $signature = 'users:view
                            {id? : The ID of a specific user to view (optional)}
                            {--keys= : A comma-delimited list of additional attributes to include (optional)}
-                           {--include= : A comma-delimited list of resource relationships to include (optional)}
-                           {--output=table : The intended output of the command (options: table, json, html)}';
+                           {--include= : A comma-delimited list of resource relationships to include (optional)}';
 
-    /**
-     * The description of the command.
-     *
-     * @var string
-     */
     protected $description = 'View a list of users';
 
-    /**
-     * The API endpoint
-     *
-     * @var string
-     */
-    protected $endpoint = 'users';
+    protected string $transformer = UsersTransformer::class;
 
-    /**
-     * The transformer to use
-     *
-     * @var string
-     */
-    protected $transformer = UsersTransformer::class;
+    public function performApiCall(): array
+    {
+        if ($this->hasArgument('id') && ! is_null($this->argument('id'))) {
+            return $this->perscom->users()->get($this->argument('id'))->json('data');
+        }
 
-    /**
-     * @var string
-     */
-    protected $method = 'GET';
+        return $this->perscom->users()->all()->json('data');
+    }
 }

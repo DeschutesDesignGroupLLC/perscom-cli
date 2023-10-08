@@ -55,22 +55,22 @@ return [
     */
 
     'hidden' => [
-        Illuminate\Console\Scheduling\ScheduleFinishCommand::class,
-        Illuminate\Console\Scheduling\ScheduleListCommand::class,
+        // Illuminate...
         Illuminate\Console\Scheduling\ScheduleRunCommand::class,
-        Illuminate\Database\Console\WipeCommand::class,
-        Illuminate\Database\Console\Migrations\FreshCommand::class,
-        Illuminate\Database\Console\Migrations\InstallCommand::class,
-        Illuminate\Database\Console\Migrations\MigrateCommand::class,
-        Illuminate\Database\Console\Migrations\MigrateMakeCommand::class,
-        Illuminate\Database\Console\Migrations\RefreshCommand::class,
-        Illuminate\Database\Console\Migrations\ResetCommand::class,
-        Illuminate\Database\Console\Migrations\RollbackCommand::class,
-        Illuminate\Database\Console\Migrations\StatusCommand::class,
-        Illuminate\Foundation\Console\VendorPublishCommand::class,
+        Illuminate\Console\Scheduling\ScheduleFinishCommand::class,
+
+        // Laravel Zero...
+        LaravelZero\Framework\Commands\BuildCommand::class,
+        LaravelZero\Framework\Commands\InstallCommand::class,
+        LaravelZero\Framework\Commands\MakeCommand::class,
+        LaravelZero\Framework\Commands\RenameCommand::class,
         LaravelZero\Framework\Commands\StubPublishCommand::class,
+
+        // NunoMaduro...
         NunoMaduro\LaravelConsoleSummary\SummaryCommand::class,
-        Symfony\Component\Console\Command\DumpCompletionCommand::class,
+        NunoMaduro\Collision\Adapters\Laravel\Commands\TestCommand::class,
+
+        // Symfony...
         Symfony\Component\Console\Command\HelpCommand::class,
     ],
 
@@ -86,13 +86,7 @@ return [
     */
 
     'remove' => Phar::running() ? [
-        Illuminate\Database\Console\Seeds\SeedCommand::class,
-        Illuminate\Database\Console\Seeds\SeederMakeCommand::class,
-        Illuminate\Foundation\Console\ModelMakeCommand::class,
-        LaravelZero\Framework\Commands\BuildCommand::class,
-        LaravelZero\Framework\Commands\InstallCommand::class,
-        LaravelZero\Framework\Commands\MakeCommand::class,
-        LaravelZero\Framework\Commands\RenameCommand::class,
-        LaravelZero\Framework\Commands\StubPublishCommand::class,
+        Illuminate\Foundation\Console\VendorPublishCommand::class,
+        Symfony\Component\Console\Command\DumpCompletionCommand::class,
     ] : [],
 ];

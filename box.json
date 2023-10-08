@@ -4,14 +4,12 @@
         "app",
         "bootstrap",
         "config",
-        "database",
-        "resources",
-        "storage",
         "vendor"
     ],
     "files": [
         "composer.json"
     ],
+    "exclude-dev-files": false,
     "exclude-composer-files": false,
     "compression": "GZ",
     "compactors": [
