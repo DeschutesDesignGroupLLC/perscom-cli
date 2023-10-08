@@ -4,43 +4,34 @@ namespace App\Commands\Users;
 
 use App\Commands\ResourceCommand;
 use App\Transformers\UsersTransformer;
+use Illuminate\Contracts\Console\PromptsForMissingInput;
 
-class UsersCreateCommand extends ResourceCommand
+class UsersCreateCommand extends ResourceCommand implements PromptsForMissingInput
 {
-    /**
-     * The signature of the command.
-     *
-     * @var string
-     */
     protected $signature = 'users:create
+                           {name : The name of the user being updated}
+                           {email : The email of the user being updated}
                            {--body= : The JSON payload containing the new user data}
                            {--keys= : A comma-delimited list of additional attributes to include (optional)}
-                           {--include= : A comma-delimited list of resource relationships to include (optional)}
-                           {--output=table : The intended output of the command (options: table, json, html)}';
+                           {--include= : A comma-delimited list of resource relationships to include (optional)}';
 
-    /**
-     * The description of the command.
-     *
-     * @var string
-     */
     protected $description = 'Create a new user';
 
-    /**
-     * The API endpoint
-     *
-     * @var string
-     */
-    protected $endpoint = 'users';
+    protected string $transformer = UsersTransformer::class;
 
-    /**
-     * The transformer to use
-     *
-     * @var string
-     */
-    protected $transformer = UsersTransformer::class;
+    public function performApiCall(): array
+    {
+        return $this->perscom->users()->create([
+            'name' => $this->option('name'),
+            'email' => $this->option('email'),
+        ])->json('data');
+    }
 
-    /**
-     * @var string
-     */
-    protected $method = 'POST';
+    protected function promptForMissingArgumentsUsing(): array
+    {
+        return [
+            'name' => 'What is the user\'s name?',
+            'email' => 'Which is the user\'s email?',
+        ];
+    }
 }

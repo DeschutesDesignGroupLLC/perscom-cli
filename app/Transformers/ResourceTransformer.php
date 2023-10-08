@@ -3,33 +3,34 @@
 namespace App\Transformers;
 
 use App\Contracts\ResourceTransformerContract;
+use Illuminate\Support\Str;
 
 class ResourceTransformer implements ResourceTransformerContract
 {
     protected array $displayKeys = [];
 
-    public array $keys = [];
-
-    public array $data = [];
-
-    public function transform(array $data = [], ?array $keys = []): static
+    public function transform(array $data = [], ?array $keys = []): array
     {
-        if (count($data) === count($data, COUNT_RECURSIVE)) {
+        if (count($data) == count($data, COUNT_RECURSIVE)) {
             $data = [$data];
         }
 
-        $this->data = $data;
+        $keys = collect(array_unique(array_merge($keys, $this->displayKeys)));
 
-        if ($keys) {
-            $this->displayKeys = array_unique(array_merge($keys, $this->displayKeys));
-        }
+        $data = collect($data)->map(function ($user) use ($keys) {
+            $object = [];
 
-        $resource = collect(collect($data)->first());
+            $keys->each(function ($key) use ($user, &$object) {
+                if (array_key_exists($key, $user)) {
+                    $object[$key] = $user[$key];
+                }
+            });
 
-        $this->keys = $resource->keys()->filter(function ($key) {
-            return in_array($key, $this->displayKeys);
-        })->toArray();
+            return $object;
+        });
 
-        return $this;
+        return [$keys->map(function ($key) {
+            return Str::title($key);
+        })->toArray(), $data];
     }
 }
